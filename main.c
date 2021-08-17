@@ -1,5 +1,11 @@
 #include <stdio.h>
 
+#ifndef UK_DEBUG_TRACE
+#define UK_DEBUG_TRACE
+#endif
+
+#include <uk/trace.h>
+
 /* Import user configuration: */
 #ifdef __Unikraft__
 #include <uk/config.h>
@@ -23,8 +29,13 @@ static void millisleep(unsigned int millisec)
 }
 #endif /* CONFIG_APPHELLOWORLD_SPINNER */
 
+UK_TRACEPOINT(trace_main, "\"%s\" 0x%x", const char*, int);
+
 int main(int argc, char *argv[])
 {
+
+	trace_main("main is being executed", 42);
+
 #if CONFIG_APPHELLOWORLD_PRINTARGS || CONFIG_APPHELLOWORLD_SPINNER
 	int i;
 #endif
